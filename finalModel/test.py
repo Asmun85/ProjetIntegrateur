@@ -1,11 +1,14 @@
 import pickle
 import pandas as pd
 # Load the model from the pickle file
-with open('best_rf_model.pkl', 'rb') as file:
-    loaded_model = pickle.load(file)
+
+path_fo_file = "/home/asmun/Desktop/INSA/5A/ProjetIntegrator/appFlask/finalModel"
+
+loaded_model  = pickle.load(open(path_fo_file + '/best_rf_model.pkl','rb'))
+scaler = pickle.load(open(path_fo_file + '/scaler','rb'))
 
 feature_names = ['default_profile', 'default_profile_image', 'favourites_count', 
-                 'followers_count', 'friends_count', 'geo_enabled', 'id', 
+                 'followers_count', 'friends_count', 'geo_enabled',
                  'statuses_count', 'verified', 'average_tweets_per_day', 
                  'account_age_days']
 
@@ -17,13 +20,13 @@ test_data = pd.DataFrame([[
             150,     # followers_count
             75,      # friends_count
             True,    # geo_enabled
-            12345,   # id
             500,     # statuses_count
             False,   # verified
             5,       # average_tweets_per_day
             365      # account_age_days
         ]], columns=feature_names)
 
+test_data = scaler.transform(test_data)
 
 predictions = loaded_model.predict(test_data)
 probabilities = loaded_model.predict_proba(test_data)
