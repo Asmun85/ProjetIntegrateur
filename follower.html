@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check User Follower Result</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f8fa;
+            color: #1da1f2;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #resultContainer {
+            font-size: 18px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Display result container -->
+<div id="resultContainer"></div>
+
+<script>
+    // Function to get user ID from URL parameters
+    function getUserIdFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('userId');
+    }
+
+    // Function to perform the API call and display the result
+    function displayApiResult() {
+        // Get the user ID from URL
+        var userId = getUserIdFromURL();
+
+        // Perform the API call here with the obtained user ID
+        // Replace the following example with your actual API call
+        let apiResult = "Résultat de l'appel API pour l'utilisateur avec l'ID : " + userId;
+
+        // Display the result in the result container
+        document.getElementById("resultContainer").innerText = apiResult;
+    }
+
+    // Call the function on page load
+    displayApiResult();
+</script>
+
+</body>
+</html>

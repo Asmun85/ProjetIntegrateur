@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Account Status</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f8fa;
+            color: #1da1f2;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+    
+        .input-container {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    
+        #userIdInput {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #1da1f2;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+    
+        .button-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap; /* Allow buttons to wrap to the next line if needed */
+            justify-content: center; /* Center the buttons horizontally */
+        }
+    
+        .twitter-button,
+        .check-user-button {
+            background-color: #1da1f2;
+            color: #fff;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+    
+        .twitter-button:hover,
+        .check-user-button:hover {
+            background-color: #0c87b8;
+            transform: scale(1.05);
+        }
+    </style>
+    
+    
+</head>
+<body>
+
+<!-- Input container for user ID -->
+<div class="input-container">
+    <input type="text" id="userIdInput" placeholder="Enter Twitter ID">
+</div>
+
+<!-- Buttons for redirection -->
+<div class="button-container">
+    <button id="checkUserButton" onclick="redirectToUserPage()" class="check-user-button">Check Account Status</button>
+    <button id="checkFollowerButton" onclick="redirectToFollowerPage()" class="twitter-button">Check Account Followers</button>
+</div>
+
+
+<script>
+    // Function to redirect to the result page with the selected option
+    function redirectToUserPage() {
+        // Get the entered user ID
+        var userId = document.getElementById("userIdInput").value;
+
+        // Redirect to result page with user ID and selected option as parameters
+        window.location.href = `user.html?userId=${encodeURIComponent(userId)}`;
+    }
+    function redirectToFollowerPage() {
+        // Get the entered user ID
+        var userId = document.getElementById("userIdInput").value;
+
+        // Redirect to result page with user ID and selected option as parameters
+        window.location.href = `follower.html?userId=${encodeURIComponent(userId)}`;
+    }
+</script>
+
+</body>
+</html>
