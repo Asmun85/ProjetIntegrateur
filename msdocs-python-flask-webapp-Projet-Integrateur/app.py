@@ -18,9 +18,9 @@ def index():
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
-
-@app.route('/hello', methods=['POST'])
-def hello():
+   
+@app.route('/user', methods=['POST'])
+def user():
    name = request.form.get('name')
 
    if name:
@@ -30,8 +30,20 @@ def hello():
        print("------------------------------------------------------------------------")
        print("------------------- Parsing the json to a df ---------------------------")
        extracted_features = userInfosProcessor.extract_features(response)
-       print(makePrediction.predictionUser(extracted_features))
-       return render_template('hello.html', name = name)    
+       res = makePrediction.predictionUser(extracted_features)
+       print(res)
+       return render_template('user.html', name = name, res = res)    
+   else:
+       print('Request for hello page received with no name or blank name -- redirecting')
+       return redirect(url_for('index'))
+
+@app.route('/follower', methods=['POST'])
+def follower():
+   name = request.form.get('name')
+
+   if name:
+       print('Request for hello page received with name=%s' % name)
+       return render_template('follower.html', name = name)
    else:
        print('Request for hello page received with no name or blank name -- redirecting')
        return redirect(url_for('index'))

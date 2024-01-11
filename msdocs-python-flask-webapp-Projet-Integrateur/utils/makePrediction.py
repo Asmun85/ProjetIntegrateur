@@ -1,8 +1,8 @@
 import pickle
 import pandas as pd
 
-model  = pickle.load(open('finalModel/best_rf_model.pkl','rb'))
-scaler = pickle.load(open('finalModel/scaler','rb'))
+model  = pickle.load(open('../finalModel/best_rf_model.pkl','rb'))
+scaler = pickle.load(open('../finalModel/scaler','rb'))
 
 def predictionUser(user_data : dict):
   df = pd.DataFrame.from_dict([user_data])
