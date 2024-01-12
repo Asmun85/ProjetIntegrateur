@@ -1,5 +1,6 @@
 import pickle
 import pandas as pd
+import numpy as np
 
 model  = pickle.load(open('../finalModel/best_rf_model.pkl','rb'))
 scaler = pickle.load(open('../finalModel/scaler','rb'))
@@ -34,12 +35,15 @@ def predictionUserFollowers(followers_data : list):
 def computeBotRatio(all_predictions : list):
   return all_predictions.count("bot")/len(all_predictions)
 
-def computeFollowersBotHumanPercentage(probabilities: list):
-  # Utilisez zip pour séparer les deux éléments dans deux listes distinctes
-    trust_bot, trust_human = zip(*probabilities)
+def computeFollowersBotHumanPercentage(probabilities):
+    trust_bot, trust_human = zip(*[(arr[0][0], arr[0][1]) for arr in probabilities])
+
+    # Convertissez les listes en tableaux NumPy
+    trust_bot_array = np.array(trust_bot)
+    trust_human_array = np.array(trust_human)
 
     # Calculez les moyennes
-    average_bot = sum(trust_bot) / len(trust_human)
-    average_human = sum(trust_bot) / len(trust_human)
+    average_bot = np.mean(trust_bot_array)
+    average_human = np.mean(trust_human_array)
 
     return average_bot, average_human
