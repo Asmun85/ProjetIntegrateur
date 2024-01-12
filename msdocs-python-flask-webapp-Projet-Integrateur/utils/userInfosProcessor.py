@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 
-def extract_features(data):
+def extract_user_features(data):
 
     # Extract the desired features
     created_at_str = data["created_at"]
@@ -27,3 +27,12 @@ def extract_features(data):
     #Returns a dictionnary of the features used for the training 
     return features
 
+def extract_followers_features(data):
+    user_followers = []
+    followers = data.json()["data"]["user"]["timeline_response"]["timeline"]["instructions"][3]["entries"]
+    for f in followers:
+        if (f["content"]["__typename"] == 'TimelineTimelineItem'):
+            follower_data = f["content"]["content"]["userResult"]["result"]["legacy"]
+            user_followers.append( extract_user_features(follower_data))
+    ##returns a list of followers in a format similar to get_user end_point
+    return user_followers
