@@ -27,3 +27,11 @@ def extract_features(data):
     #Returns a dictionnary of the features used for the training 
     return features
 
+def extract_followers(data):
+    user_followers = []
+    followers = data.json()["data"]["user"]["timeline_response"]["timeline"]["instructions"][3]["entries"]
+    for f in followers:
+        if (f["content"]["__typename"] == 'TimelineTimelineItem'):
+            user_followers.append(f["content"]["content"]["userResult"]["result"]["legacy"])
+    ##returns a list of followers in a format similar to get_user end_point
+    return user_followers
