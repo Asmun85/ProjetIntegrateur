@@ -21,29 +21,31 @@ def predictionUser(user_data : dict):
 
 def predictionUserFollowers(followers_data : list):
   all_predictions = []
-  all_probabilities = []
+  all_human_probabilities = []
+  all_bot_probabilities = []
   
   for follower_data in followers_data:
         predictions, probabilities = predictionUser(follower_data)
-
+        print(probabilities)
         all_predictions.append(predictions)
-        all_probabilities.append(probabilities)
+        if predictions == 'human':
+           all_human_probabilities.append(probabilities[0][1])
+        else : 
+           all_bot_probabilities.append(probabilities[0][0])
     
 
-  return all_predictions , all_probabilities
+  return all_predictions , all_human_probabilities, all_bot_probabilities
 
 def computeBotRatio(all_predictions : list):
   return all_predictions.count("bot")/len(all_predictions)
 
-def computeFollowersBotHumanPercentage(probabilities):
-    trust_bot, trust_human = zip(*[(arr[0][0], arr[0][1]) for arr in probabilities])
-
+def computeFollowersBotHumanPercentage(humanprobabilities, botprobabilities):
     # Convertissez les listes en tableaux NumPy
-    trust_bot_array = np.array(trust_bot)
-    trust_human_array = np.array(trust_human)
+    trust_bot_array = np.array(botprobabilities)
+    trust_human_array = np.array(humanprobabilities)
 
     # Calculez les moyennes
-    average_bot = np.mean(trust_bot_array)
-    average_human = np.mean(trust_human_array)
+    average_bot = round(np.mean(trust_bot_array),4)
+    average_human = round(np.mean(trust_human_array),4)
 
     return average_bot, average_human

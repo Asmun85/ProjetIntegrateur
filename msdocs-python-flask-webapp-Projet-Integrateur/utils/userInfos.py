@@ -26,7 +26,7 @@ def getUserFollowersInfos(username):
     "X-RapidAPI-Key": key,
     "X-RapidAPI-Host": "twttrapi.p.rapidapi.com"
   } 
-  response = requests.get(url_user, headers=headers, params=querystring)
+  response = requests.get(url_user_followers, headers=headers, params=querystring)
   ## Returns the Json(dictionnary) of the API call for User_infos
   return response.json()
 

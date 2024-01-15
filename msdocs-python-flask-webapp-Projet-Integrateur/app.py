@@ -29,10 +29,14 @@ def user():
        print(response)
        print("------------------------------------------------------------------------")
        print("------------------- Parsing the json to a df ---------------------------")
-       extracted_features = userInfosProcessor.extract_features(response)
-       res = makePrediction.predictionUser(extracted_features)
-       print(res)
-       return render_template('user.html', name = name, res = res)    
+       try:
+            extracted_user_features = userInfosProcessor.extract_user_features(response)
+            res = makePrediction.predictionUser(extracted_user_features)
+            res[1][0][1] = round(res[1][0][1],4)
+            res[1][0][0] = round(res[1][0][0],4)
+            return render_template('user.html', name = name, res = res)
+       except KeyError as e:
+            return render_template('error.html', name = name)   
    else:
        print('Request for hello page received with no name or blank name -- redirecting')
        return redirect(url_for('index'))
@@ -47,12 +51,17 @@ def follower():
        print(response)
        print("------------------------------------------------------------------------")
        print("------------------- Parsing the json to a df ---------------------------")
+       #try:
        extracted_followers_features = userInfosProcessor.extract_followers_features(response)
-       predictions, probabilities = makePrediction.predictionUserFollowers(extracted_followers_features)
+       predictions, humanprobabilities, botprobabilities = makePrediction.predictionUserFollowers(extracted_followers_features)
        botRatio = makePrediction.computeBotRatio(predictions)
-       followersBotHumanPercentage = makePrediction.computeFollowersBotHumanPercentage(probabilities)
-       
-       return render_template('follower.html', name = name, botRatio = botRatio, followersBotHumanPercentage = followersBotHumanPercentage)
+       botpercentage, humanpercentage = makePrediction.computeFollowersBotHumanPercentage(humanprobabilities, botprobabilities)
+       botRatio = round(botRatio,4)
+       botpercentage = round(botpercentage,4)
+       humanpercentage = round(humanpercentage,4)
+       return render_template('follower.html', name = name, botRatio = botRatio, followersBotHumanPercentage = [botpercentage, humanpercentage])
+       #except KeyError as e:
+            #return render_template('error.html', name = name) 
    else:
        print('Request for hello page received with no name or blank name -- redirecting')
        return redirect(url_for('index'))
