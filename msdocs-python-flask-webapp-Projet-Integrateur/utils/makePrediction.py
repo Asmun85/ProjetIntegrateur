@@ -11,10 +11,9 @@ def predictionUser(user_data : dict):
   predictions = model.predict(scaled_data)
   probabilities = model.predict_proba(scaled_data)
 
-
+  print(model.feature_importances_)
   print("Predictions:", predictions)
   print("Trust Percentages:", probabilities)
-
   return predictions , probabilities
 
 ## {prediction : 'human' or 'bot', 'trust_bot' : value , 'trust_human' : value}

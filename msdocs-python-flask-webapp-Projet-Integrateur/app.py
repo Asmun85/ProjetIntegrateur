@@ -25,12 +25,15 @@ def user():
 
    if name:
        print('Informations on user for username=%s' % name)
+       ## Appel micro Service GetUserInfos.
        response = userInfos.getUserInfos(name)
        print(response)
        print("------------------------------------------------------------------------")
        print("------------------- Parsing the json to a df ---------------------------")
        try:
+            ## Appel micro service UserProcessor:
             extracted_user_features = userInfosProcessor.extract_user_features(response)
+            #########################################################################
             res = makePrediction.predictionUser(extracted_user_features)
             res[1][0][1] = round(res[1][0][1],4)
             res[1][0][0] = round(res[1][0][0],4)
